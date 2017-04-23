@@ -24,23 +24,23 @@ function getComponentAttrFromArg(arg) {
 }
 
 // LLA stands for latitude, longitude, altitude
-Macro.add(['createPanorama'], {
-    handler() {
-        if (this.args.length < 3) {
-                return this.error('required parameters are {name, dataset url, LLA}, plus other optional additional parameters');
-        }
-        console.log("new panorama '" + this.args[0] + "', url: " + this.args[1]);
-        var argValue = "src:url(" + this.args[1] + ");lla:" + this.args[2] + ";";
+    Macro.add(['createPanorama'], {
+        handler() {
+            if (this.args.length < 3) {
+                    return this.error('required parameters are {name, dataset url, LLA}, plus other optional additional parameters');
+            }
+            console.log("new panorama '" + this.args[0] + "', url: " + this.args[1]);
+            var argValue = "src:url(" + this.args[1] + ");lla:" + this.args[2] + ";";
 
-        // Manipulates the argument to get the necessary information. Above the 'createPanorama' macro, you can find the helper function that this loop utilizes.
-        for (var i = 3; i<this.args.length; i++) {
-            argValue += getComponentAttrFromArg(this.args[i]);
-        }
+            // Manipulates the argument to get the necessary information. Above the 'createPanorama' macro, you can find the helper function that this loop utilizes.
+            for (var i = 3; i<this.args.length; i++) {
+                argValue += getComponentAttrFromArg(this.args[i]);
+            }
 
-        // Adds the panorama into Argon
-        $('#argon-aframe').attr("panorama__" + this.args[0], argValue);
-    }
-});
+            // Adds the panorama into Argon
+            $('#argon-aframe').attr("panorama__" + this.args[0], argValue);
+        }
+    });
 
 '''
 
