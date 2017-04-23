@@ -23,7 +23,7 @@ function getComponentAttrFromArg(arg) {
     }
 }
 
-// LLA stands for latitude, longitude, altitude
+
     Macro.add(['createPanorama'], {
         handler() {
             if (this.args.length < 3) {
