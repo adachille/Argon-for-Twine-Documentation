@@ -12,6 +12,7 @@ The first macro we must define is 'createPanorama'. This macro will be called in
 ''' javascript
 
 A helper function for createPanorama that gets information from the arguments passed into it.
+
     function getComponentAttrFromArg(arg) {
         var eq = arg.indexOf("=");
         if (eq == -1) {
