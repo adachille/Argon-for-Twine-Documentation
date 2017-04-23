@@ -9,8 +9,6 @@ We now need to add three important macros to give our AR experience panorama fun
 
 The first macro we must define is 'createPanorama'. This macro will be called in the StoryInit passage and be used to initialize a panorama that we may later use in our Twine passages. It takes in three arguments, a name, a dataset url, and a string containing the latitude, longitude, and altitude, of the location of the panorama. We will also be creating a short helper function for our createPanorama macro. Add the code below.
 
-''' javascript
-
 A helper function for createPanorama that gets information from the arguments passed into it.
 
     function getComponentAttrFromArg(arg) {
@@ -44,35 +42,31 @@ LLA stands for latitude, longitude, altitude
         }
     });
 
-'''
 
 The second macro we will define is 'requestPanoramaReality', which can be used in our story passages to retrieve a panorama reality that we will need to place our panorama in. The macro will take in two arguments, the name of the panorama reality we want to create and the url of the panoramaReality. Finally, we will add a last, simple macro that will display the panorama of our choosing. The only parameter we need is the name of the panorama.
 
-''' javascript
 
-//var panoramaRealityURL = "http://argonjs.io/argon-aframe/resources/reality/panorama/index.html"
-Macro.add(['requestPanoramaReality'], {
-    handler() {
-        if (this.args.length < 2) {
-            return this.error('required parameters are name and url');
+    var panoramaRealityURL = "http://argonjs.io/argon-aframe/resources/reality/panorama/index.html"
+    Macro.add(['requestPanoramaReality'], {
+        handler() {
+            if (this.args.length < 2) {
+                return this.error('required parameters are name and url');
+            }
+            console.log("new reality '" + this.args[0] + "', url: " + this.args[1]);
+            $('#argon-aframe').attr("desiredreality", "name:'" + this.args[0] + "';src:url(" + this.args[1] + ");");
         }
-        console.log("new reality '" + this.args[0] + "', url: " + this.args[1]);
-        $('#argon-aframe').attr("desiredreality", "name:'" + this.args[0] + "';src:url(" + this.args[1] + ");");
-    }
-});
+    });
 
 
-Macro.add(['showPanorama'], {
-    handler() {
-        if (this.args.length < 1) {
-            return this.error('parameter is panorama name');
+    Macro.add(['showPanorama'], {
+        handler() {
+            if (this.args.length < 1) {
+                return this.error('parameter is panorama name');
+            }
+            console.log("show panorama '" + this.args[0]);
+            $('#argon-aframe')[0].emit("showpanorama", { name: this.args[0] });
         }
-        console.log("show panorama '" + this.args[0]);
-        $('#argon-aframe')[0].emit("showpanorama", { name: this.args[0] });
-    }
-});
-
-'''
+    });
 
 Now, onto the fun part! Leave the editor, open the auto=generated empty passage, and name it 'Start'. Remember that the first passage must always be the 'Start' passage.
 
