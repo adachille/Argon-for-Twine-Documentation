@@ -7,7 +7,10 @@ In this tutorial, you will create an AR experience that utilizes panoramas. Let'
 
 We now need to add three important macros to give our AR experience panorama functionality.
 
-The first macro we must define is 'createPanorama'. This macro will be called in the StoryInit passage and be used to initialize a panorama that we may later use in our Twine passages. It takes in three arguments, a name, a dataset url, and a string containing the latitude, longitude, and altitude, of the location of the panorama. We will also be creating a short helper function for our createPanorama macro. Add the code below.
+The first macro we must define is 'createPanorama'. 
+This macro will be called in the StoryInit passage and be used to initialize a panorama that we may later use in our Twine passages. 
+It takes in three arguments, a name, a dataset url, and a string containing the latitude, longitude, and altitude, of the location of the panorama. 
+We will also be creating a short helper function for our createPanorama macro. Add the code below.
 
 A helper function for createPanorama that gets information from the arguments passed into it.
 
@@ -43,7 +46,9 @@ LLA stands for latitude, longitude, altitude
     });
 
 
-The second macro we will define is 'requestPanoramaReality', which can be used in our story passages to retrieve a panorama reality that we will need to place our panorama in. The macro will take in two arguments, the name of the panorama reality we want to create and the url of the panoramaReality. Finally, we will add a last, simple macro that will display the panorama of our choosing. The only parameter we need is the name of the panorama.
+The second macro we will define is 'requestPanoramaReality', which can be used in our story passages to retrieve a panorama reality that we will need to place our panorama in. 
+The macro will take in two arguments, the name of the panorama reality we want to create and the url of the panoramaReality. 
+Finally, we will add a last, simple macro that will display the panorama of our choosing. The only parameter we need is the name of the panorama.
 
 
     var panoramaRealityURL = "http://argonjs.io/argon-aframe/resources/reality/panorama/index.html"
@@ -80,16 +85,57 @@ We will now create our 'StoryInit' passage. Click the add passage button and nav
 
 Notice that the first 'createPanorama' has an extra parameter. That parameter simply lets Argon know which that you plan to use that panorama first.
 
-Now that we've initialized the panoramas, we can move on to the 'Start' passage. We will now need the other two macros we added: 'requestPanoramaReality' and 'showPanorama'. Add this code to your 'Start' passage.
+The code for 'StoryInit' passage should now look like this with all the components included:
 
-Here we see our first panorama, take a look around! Notice how the resolution is diminished, a result of expanding the picture to a 360 degree view. [[Click next|second]] to see how 3D objects look when placed on a panorama.
+    <<initVuforia "http://argonjs.io/argon-aframe/vuforia/key.txt">>
+
+    <<vuforiaDataset tutorial "http://argonjs.io/samples/code/resources/datasets/ArgonTutorial.xml">>
+
+    <<createReferenceFrameEntity box-and-sphere story ar.user userotation=false>>
+
+    <<append3d box-and-sphere story>>
+    <a-sphere position="0 1.25 -10" radius="1.25" color="#EF2D5E" ></a-sphere><a-box id="bluebox" position="-1 0.5 -10" rotation="0 45 0" width="1" height="1" depth="1"  color="#4CC3D9"></a-box>
+    <</append3d>>
+
+    <<createReferenceFrameEntity gvuCover story vuforia.tutorial.GVUBrochure trackvisibility=true visible=false>>
+
+    <<append3d gvuCover story>>
+    <a-box position="0 0 0.025" width="0.05" depth="0.05" height="0.05" color="yellow" ></a-sphere>
+    <</append3d>>
+
+    <<createPanorama aquarium http://bmaci.com/a4/twine/panoramas/aqui.jpg "-84.3951 33.7634 206" initial=true>>
+    <<createPanorama skyline http://bmaci.com/a4/twine/panoramas/cent.jpg "-84.3931 33.7608 309">>
+    <<createPanorama museum http://bmaci.com/a4/twine/panoramas/high.jpg "-84.38584 33.79035 289">>
+    <<createPanorama park http://bmaci.com/a4/twine/panoramas/pied.jpg "-84.37427 33.78577 271">>
+
+
+Now that we've initialized the panoramas, we can move on to the 'Start' passage.
+Start passage is mainly used for initializing the reference frame in which panoramas will appear. 
+All we need to do in this passage is to append a 3D sphere and position in the Argon space.
+The code should look like this:
+
+    This is a simple AR scene.  [[Click|second]] to go to another one.<<nobr>>
+    <<createReferenceFrameEntity sphere passage ar.user userotation=false>>
+    <<append3d sphere passage>>
+    <a-sphere position="1 1.25 -5" radius="1.25" color="darkgreen" ></a-sphere>
+    <</append3d>>
+    <</nobr>> 
+
+For subsequent passages, we will now need the other two macros we added: 'requestPanoramaReality' and 'showPanorama'. 
+Add this code to your passages:
 
     <<requestPanoramaReality "Panorama Reality" "http://bmaci.com/a4/twine/panoramaReality/index.html">>
     <<showPanorama aquarium>>
 
+Note that 'aquarium' should be replaced with respective panorama image that we wish to show in the scene.
+
+Here we see our first panorama, take a look around! Notice how the resolution is diminished, a result of expanding the picture to a 360 degree view. 
+[[Click next|second]] to see how 3D objects look when placed on a panorama.
+
 With our next passage, let's try to overlay our panorama with some 3D objects. Think back to tutorial 3. How did we add 3D objects to a scene?
 
-Remember, we first have to add the append3d (and optionally the replace3d) macro into the JavaScript component before we can begin placing 3D objects into our scene. After that's done, we can start creating all kinds of 3D objects. Your second passage can look something like this:
+Remember, we first have to add the append3d (and optionally the replace3d) macro into the JavaScript component before we can begin placing 3D objects into our scene. 
+After that's done, we can start creating all kinds of 3D objects. Your second passage can look something like this:
 
 Here is our second panorama, and as you can see (you might have to look around), we have added some 3D objects to it! Click [[here|Start]] to go back to the 'Start' scene.
 
@@ -100,15 +146,14 @@ Here is our second panorama, and as you can see (you might have to look around),
     <a-sphere position="0 1.25 -5" radius="1.25" color="pink" ></a-sphere><a-box id="bluebox" position="5 0.5 -5" rotation="0 45 0" width="1" height="1" depth="1"  color="blue"></a-box>
     <</append3d>>
 
-Now that we have shown you the basic process for adding panoramas to your AR experiences, you should go ahead and play around and practice what you've learned. Feel free to implement passages for the last two panoramas!
+Now that we have shown you the basic process for adding panoramas to your AR experiences, you should go ahead and play around and practice what you've learned. 
+Feel free to implement passages for the last two panoramas!
 
 When you are ready, continue onto the next tutorial, which will be all about utilizing Vuforia.
 
 
 
 //TODO: explain what a panoramaReality and dataseturl are and see if you have to alter the requestPanoramaReality paragraph.
-
-//TODO: check if you can make the names for panoramas longer than four letters long. If so, call them: aquarium, skyline, artMuseum, and park.
 
 //Macros you need
 //createReferenceFrameEntity
