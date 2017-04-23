@@ -11,17 +11,17 @@ The first macro we must define is 'createPanorama'. This macro will be called in
 
 ''' javascript
 
-// A helper function for createPanorama that gets information from the arguments passed into it.
-function getComponentAttrFromArg(arg) {
-    var eq = arg.indexOf("=");
-    if (eq == -1) {
-        return(arg);
-    } else if (eq == 0 || eq == arg.length-1) {
-        return "";
-    } else {
-        return arg.slice(0,eq) + ":" + arg.slice(eq+1) + ";";
+A helper function for createPanorama that gets information from the arguments passed into it.
+    function getComponentAttrFromArg(arg) {
+        var eq = arg.indexOf("=");
+        if (eq == -1) {
+            return(arg);
+        } else if (eq == 0 || eq == arg.length-1) {
+            return "";
+        } else {
+            return arg.slice(0,eq) + ":" + arg.slice(eq+1) + ";";
+        }
     }
-}
 
 LLA stands for latitude, longitude, altitude
 
