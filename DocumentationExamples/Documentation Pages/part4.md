@@ -3,13 +3,15 @@ layout: page
 title: 'Part 4: CSS Styling in Twine'
 ---
 
+> This lesson uses the first [example](https://github.com/blairmacintyre/oldfashioned/tree/master/examples/) from github. <br> Import the text file into Twine to open the project.
 
-The example used in this tutorial can be found [here](https://github.com/blairmacintyre/oldfashioned). It is "test1" found in the "examples" folder.
 
+## Utilizing CSS Styling
+You can utilize CSS for styling an Argon experience's layout, font, and presentation. We will be adding some CSS styling to the Twine expererience we created in the last lesson.
 
-Argon experience in Twine utilizes CSS for its layout, font, and presentation. Let's begin to add some CSS styling to our existing story in Twine. First, we need to reference our story. In CSS, this is done with a "#." Next, we specify our pointer events.'Pointer-events' allows you to control when a graphic element becomes the target of mouse elements. "Auto" applies to all events. Next, we add in our font families. The example below employs the "Arial" family name and the generic "sans-serif" family. Next, add some padding with pixels. Now, we can specify our background color. The "rgba" function takes four inputs (red,green,blue,opacity). The first three inputs take values from 0 to 255, the opacity input takes values in a decimal range from 0-1.0. The "-webkit-backdrop-filter" property uses the "blur" function to distort the image. The "position" property assigns an "absolute" value. The element is positioned relative to its first positioned (not static) ancestor element. The "bottom" property is placed zero pixels above the bottom-most edge. 
+To create storywide styling, you must reference the story's id: `story`. We can style our story in a multitude of different ways. For example, we can specify "pointer events", which allow you to control when a graphic element becomes the target of mouse elements. "Auto" applies to all events. Other possible styling we can do includes choosing our font families, specifying background color, positioning our CSS elements, etc..
 
-'''css
+```css
 
 #story {
   pointer-events: auto;
@@ -21,32 +23,25 @@ Argon experience in Twine utilizes CSS for its layout, font, and presentation. L
   bottom: 0px;
 }
 
-'''
+```
 
-Next, we direct our attention to ".argon-focus". The "transition: opacity" creates a fade of duration 0.8 seconds. We want the element to be visible so we define it as "visible," not "hidden". The "opacity" value of 1 means the image is not transparent at all and easy to view. 
+Using CSS styling, we can also influence how Argon treats obejcts that are in focus and those that are out of focus. To style elements that are in focus, simply style the `argon-focus` class, and for those that are out of focus, use the `argon-no-focus` class.
 
-'''css 
+Add the code below and notice how in this example we make objects that are not focused notably more transparent.
+
+```css
 
 .argon-focus #story {
   transition: opacity 0.8s;
   visibility: visible;
-  opacity: 1; 
+  opacity: 1;
 }
-
-'''
-
-For "argon-no-focus", the code is similar. However, the transition property implements the "linear" function. The "linear" command represents a linear animation curve with an animation delay of 0.5 seconds. "Opacity" should have a zero value here which means it is completely transparent.  
-
-'''css
 
 .argon-no-focus #story {
   transition: visibility 0s linear 0.8s, opacity 0.8s;
   visibility: visible;
   opacity: 0;
 
-'''
+```
 
-
-"Argon-focus" and "argon-no-focus" have an important distinction here. The "argon-focus" class focuses in on the object. The object is highly visible for the user. In contrast, the "argon-no-focus" blurs the object with its use of transition and opacity level. Argon uses these two classes to blur and focus the view element based on events.
-
-Next, we will learn about Panoramas.
+In the next lesson you will learn how to utilize panoramas in your AR experiences!
